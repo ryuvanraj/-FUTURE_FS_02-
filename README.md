@@ -3,7 +3,9 @@
 A modern, responsive weather application built with React that provides real-time weather information and forecasts using the OpenWeatherMap API.
 
 ![Screenshot 2025-06-02 200111](https://github.com/user-attachments/assets/7f2b412f-0eb3-4ac0-b7b2-7290e70ac401)
-
+![Screenshot 2025-06-02 200213](https://github.com/user-attachments/assets/ba29dd22-7096-4792-b194-40b1ed393b83)
+![Screenshot 2025-06-02 200349](https://github.com/user-attachments/assets/959fa103-4440-434f-a712-6e6d581075e0)
+![Screenshot 2025-06-02 200434](https://github.com/user-attachments/assets/b79a5005-33e1-44a1-88e0-7d905cb771cc)
 
 ## Features
 
