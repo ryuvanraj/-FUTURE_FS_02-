@@ -4,7 +4,7 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Moon, Sun, RefreshCw, Search, Navigation, Loader2, MapPin, AlertCircle, Cloud, CloudRain, CloudSnow, Zap, Star, Plus, Droplets, Wind, Eye, Gauge, Sunrise, Sunset, Heart, BarChart3, Calendar, Clock, TrendingUp, Compass, Thermometer } from 'lucide-react';
 
 // API constants
-const API_KEY = 'd024ea56444b472783edafb77cdd6595';
+const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
 const BASE_URL = 'https://api.openweathermap.org/data/2.5';
 
 const App = () => {
