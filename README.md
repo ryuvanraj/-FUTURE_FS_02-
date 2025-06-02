@@ -92,3 +92,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - OpenWeatherMap for providing the weather data API
 - Lucide Icons for the beautiful icons
 - Tailwind CSS for the styling framework
+
+## My Info
+E-Mail : [yuvan.r2005@gmail.com](yuvan.r2005@gmail.com)
+
+Github : [ryuvanraj](https://github.com/ryuvanraj/)
