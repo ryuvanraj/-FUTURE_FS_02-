@@ -449,7 +449,8 @@ const App = () => {
               {currentWeather.city}, {currentWeather.country}
             </h2>
             <p className={`${themeConfig.textMuted} text-sm`}>
-              Last updated: {currentWeather.lastUpdated}
+              Last updated: {currentWeather.lastUpdated} 
+              ({currentWeather.dataAge} minutes ago)
             </p>
           </div>
           <button
