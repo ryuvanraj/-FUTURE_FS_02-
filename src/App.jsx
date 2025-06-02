@@ -85,6 +85,17 @@ const App = () => {
     initializeApp();
   }, []);
 
+  // Auto-refresh weather data
+  useEffect(() => {
+    const refreshInterval = setInterval(() => {
+      if (lastSearchedCity) {
+        refreshWeather();
+      }
+    }, 600000); // Refresh every 10 minutes
+
+    return () => clearInterval(refreshInterval);
+  }, [lastSearchedCity]);
+
   // Enhanced weather condition mapping
   const getWeatherCondition = useCallback((weatherMain, weatherId) => {
     if (weatherId >= 200 && weatherId < 300) return 'stormy';
@@ -118,7 +129,8 @@ const App = () => {
       pressure: currentData.main.pressure,
       sunrise: new Date(currentData.sys.sunrise * 1000),
       sunset: new Date(currentData.sys.sunset * 1000),
-      lastUpdated: new Date().toLocaleTimeString(),
+      lastUpdated: new Date(currentData.dt * 1000).toLocaleTimeString(), // Use API timestamp
+      dataAge: Math.round((Date.now() - currentData.dt * 1000) / 1000 / 60), // Age in minutes
       tempUnit,
       speedUnit,
       coord: currentData.coord
@@ -326,22 +338,24 @@ const App = () => {
   // Search Component
   const SearchComponent = () => (
     <div className="max-w-4xl mx-auto mb-8">
-      <form onSubmit={(e) => { e.preventDefault(); handleSearch(searchQuery); }} className="flex flex-col md:flex-row gap-4 items-center justify-center">
+      <form onSubmit={(e) => { 
+        e.preventDefault(); 
+        handleSearch(searchQuery); 
+      }} className="flex flex-col md:flex-row gap-4 items-center justify-center">
         <div className="relative flex-1 max-w-lg">
           <Search className="absolute left-5 top-1/2 transform -translate-y-1/2 text-gray-400/70" size={20} />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => {
-              const value = e.target.value;
-              setSearchQuery(value);  // Update the search query immediately
-              // Only show suggestions if input length > 1
-              if (value.length > 1) {
+              setSearchQuery(e.target.value);
+              // Update suggestions based on new input
+              if (e.target.value.length > 1) {
                 const filtered = Cities.filter(city => 
-                  city.toLowerCase().includes(value.toLowerCase())
+                  city.toLowerCase().includes(e.target.value.toLowerCase())
                 ).slice(0, 8);
                 setSuggestions(filtered);
-                setShowSuggestions(true);
+                setShowSuggestions(filtered.length > 0);
               } else {
                 setSuggestions([]);
                 setShowSuggestions(false);
@@ -352,7 +366,10 @@ const App = () => {
                 setShowSuggestions(true);
               }
             }}
-            onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+            onBlur={() => {
+              // Delay hiding suggestions to allow for clicks
+              setTimeout(() => setShowSuggestions(false), 200);
+            }}
             placeholder="Search for any city worldwide..."
             className={`w-full pl-14 pr-6 py-5 rounded-2xl ${themeConfig.input} focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-transparent transition-all duration-300 text-lg backdrop-blur-lg shadow-lg`}
           />
